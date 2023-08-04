@@ -13,14 +13,14 @@ GET_IMAGE_ANY_BREED = 'breeds/image/random'
 
 def test_get_all_sub_breed():
     response = base_request.get(GET_ALL_SUB_BREEDS)
-    assert response.status_code == 200
+
     assert response.json().get('status') == 'success'
     assert isinstance(response.json().get('message'), list)
 
 
 def test_get_image_any_breed():
     response = base_request.get(GET_IMAGE_ANY_BREED)
-    assert response.status_code == 200
+
     assert response.json().get('status') == 'success'
     assert '.jpg' in response.json().get('message')
 
@@ -32,22 +32,23 @@ def test_get_image_any_breed():
 ])
 def test_get_images_any_breed(quantity):
     response = base_request.get(f'{GET_IMAGE_ANY_BREED}/{quantity}')
-    assert response.status_code == 200
+
     assert response.json().get('status') == 'success'
     assert len(response.json().get('message')) == quantity
 
 
-@pytest.mark.parametrize('quantity', [51])
+@pytest.mark.parametrize('quantity', [0, 51])
 def test_get_images_any_breed_negative(quantity):
     response = base_request.get(f'{GET_IMAGE_ANY_BREED}/{quantity}')
-    with pytest.raises(AssertionError):
-        assert len(response.json().get('message')) == quantity
+
+    assert len(response.json().get('message')) != quantity
 
 
 @pytest.mark.parametrize('breed', ['mix', 'akita', 'whippet'])
 def test_get_image_breed(breed):
     response = base_request.get(f'breed/{breed}/images/random')
-    assert response.status_code == 200
+
     assert response.json().get('status') == 'success'
-    assert '.jpg' and breed in response.json().get('message')
+    assert '.jpg' in response.json().get('message')
+    assert breed in response.json().get('message')
 

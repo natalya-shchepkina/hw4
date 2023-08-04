@@ -16,7 +16,8 @@ class BaseRequest:
             else:
                 response = requests.delete(url)
 
-            if not expected_error and response.status_code == 200 or response.status_code == 201:
+            if not expected_error and response.status_code == 200 \
+                    or response.status_code == 201 and not expected_error:
                 stop_flag = True
             elif expected_error:
                 stop_flag = True

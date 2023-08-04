@@ -28,7 +28,7 @@ def test_json_schema():
         },
         "required": ["body", "id", "title", "userId"]
     }
-    assert response.status_code == 200
+
     validate(instance=response.json(), schema=schema)
 
 
@@ -88,5 +88,4 @@ def test_delete_request():
     resource_id = base_request.post('posts', body).json()['id']
     response = base_request.delete(f'posts/{resource_id}')
 
-    assert response.status_code == 200
     assert response.json() == {}

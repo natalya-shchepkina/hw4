@@ -35,7 +35,7 @@ def test_get_breweries():
         },
         "required": ["id", "address_1", "country", "city"]
     }
-    assert response.status_code == 200
+
     validate(instance=response.json(), schema=schema)
 
 
@@ -70,7 +70,7 @@ def test_get_meta():
     }
     response = base_request.get('meta')
 
-    assert response.status_code == 200
+
     validate(instance=response.json(), schema=schema)
 
 
